@@ -3,17 +3,33 @@ package com.neural;
 import java.util.Iterator;
 import java.util.Vector;
 
-public abstract class Neuron {
+public class Neuron 
+{
+	public static int lastId = 0;
+	public int id;	
 
 	protected Vector<Synapse> inputSynapses;
 	protected Vector<Synapse> outputSynapses;
 	
-	public abstract double getOutput();
-		
+	private ActivationFunction func;
+	
 	public Neuron()
 	{
 		this.inputSynapses = new Vector<Synapse>();
 		this.outputSynapses = new Vector<Synapse>();
+		this.func = new LinearActivationFunction();
+		this.id = lastId++; 
+	}
+	
+	public Neuron(ActivationFunction func)
+	{
+		this();
+		this.func = func;
+	}
+	
+	public String toString()
+	{
+		return "N" + id;
 	}
 	
 	public void addInputSynapse(Synapse s)
@@ -44,5 +60,15 @@ public abstract class Neuron {
 		b.addInputSynapse(syn);
 		
 		return syn;
+	}
+	
+	public static Synapse connect(Neuron a, Neuron b)
+	{
+		return connect(a, b, Math.random() - 0.5); // random weight between [-0.5, 0.5]
+	}
+	
+	public ActivationFunction getActivationFunction()
+	{
+		return func;
 	}
 }

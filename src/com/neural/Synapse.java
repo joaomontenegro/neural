@@ -12,6 +12,13 @@ public class Synapse {
 		this.weight = weight;
 	}
 	
+	public Synapse(Neuron a, Neuron b)
+	{
+		this.a = a;
+		this.b = b;
+		this.weight = (Math.random() * 2) - 1; // random between -1.0 and 1.0
+	}
+	
 	public Neuron getA()
 	{
 		return a;
